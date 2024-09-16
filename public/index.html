@@ -12,8 +12,8 @@
     <meta name="keywords" content="app financial tracking budget">
     <!-- This is an SEO Change -->
     <meta name="language" content="English">
-    <link rel="stylesheet" type="text/css" href="public/reset.css">
-    <link rel="stylesheet" type="text/css" href="public/main.css">
+    <link rel="stylesheet" type="text/css" href="/reset.css">
+    <link rel="stylesheet" type="text/css" href="/main.css">
 </head>
 <body>
 
@@ -101,6 +101,13 @@
                 </p>
             </article>
 
+            <article>
+                <h1>Chart</h1>
+                <p>
+                    <canvas id="myChart" width="400" height="400"></canvas>
+                </p>
+            </article>
+
         </div>
 
     </main>
@@ -110,6 +117,48 @@
             All rights reserved &copy; Fabio Nolasco
         </div>
     </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.js" integrity="sha512-luUnkeG+uabiT2pZdi5ME5uADvq+FpDs2fK5V0nVXrHCND9F077fKaE9W//oJvGnWSmwQmCau63A6s3um1NZmg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" integrity="sha512-CQBWl4fJHWbryGE+Pc7UAxWMUMNMWzWxF4SQo9CgkJIN1kx6djDQZjh3Y8SZ1d+6I+1zze6Z7kHXO7q3UyZAWw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <script>
+        var dataSource = {
+            labels: [],
+            datasets: [
+                {
+                data: [],
+                backgroundColor: [
+                    '#fbcef6',
+                    '#ff6384',
+                    '#36a2eb',
+                ],
+                hoverOffset: 4
+            } ]
+        };
+
+
+
+        function createChart() {
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myPieChart = new Chart(ctx, {
+                type: 'pie',
+                data: dataSource
+            });
+        }
+
+        function getBudget() {
+            axios.get('http://localhost:3000/budget')
+            .then(function (res) {
+                for (var i = 0; i < res.data.myBudget.length; i++) {
+                    dataSource.datasets[0].data[i] = res.data.myBudget[i].budget;
+                    dataSource.labels[i] = res.data.myBudget[i].title;
+                }
+                createChart();
+            });
+        }
+
+        getBudget();
+    </script>
 
 </body>
 </html>
