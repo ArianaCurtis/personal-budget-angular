@@ -36,7 +36,7 @@ export class HomepageComponent implements AfterViewInit{
 
  createChart() {
   this.canvas = document.getElementById('myChart');
-  this.ctx = this.canvas.getContext('2d')
+  this.ctx = this.canvas.getContext('2d');
   let chart = new Chart(this.ctx, {
       type: 'pie',
       data: this.dataSource

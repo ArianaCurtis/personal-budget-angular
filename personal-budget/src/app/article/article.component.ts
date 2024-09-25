@@ -1,4 +1,4 @@
-import { Component,} from '@angular/core';
+import { Component, Input} from '@angular/core';
 
 @Component({
   selector: 'pb-article',
@@ -6,10 +6,10 @@ import { Component,} from '@angular/core';
   styleUrl: './article.component.scss',
   template: `<article>
   <h1>
-    <ng-content select="[slot1]"></ng-content>
+    <ng-content select="h1"></ng-content>
   </h1>
   <p>
-    <ng-content select="[slot2]"></ng-content>
+    <ng-content select="p"></ng-content>
   </p>
   </article>
   `
